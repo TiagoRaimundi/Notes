@@ -29,18 +29,16 @@ app.get('/', async function(req, res) {
 
         res.render('home', {notes});
 
-
 })
 
 app.use('/notes',notesRoutes )
-
 
 
 db.initDb((err, db) => {
     if (err) {
         console.log(err);
     } else {
-        app.listen(8000, () => {
+        app.listen(8000, '0.0.0.0', () => {
             console.log('Servidor rodando na porta 8000');
         });
     }

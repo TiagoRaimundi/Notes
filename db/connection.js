@@ -1,5 +1,10 @@
 const { MongoClient } = require("mongodb");
-const url = "mongodb://.................../notesDb";
+// Importa variáveis de ambiente de um arquivo .env para process.env
+require("dotenv").config();
+
+// Usa as variáveis de ambiente para a URL e o nome do banco de dados
+const url = process.env.MONGODB_URI;
+const dbName = process.env.DB_NAME;
 
 let _db;
 
@@ -9,9 +14,9 @@ const initDb = (callback) => {
     return callback(null, _db);
   }
 
-  MongoClient.connect(url)
+  MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
     .then((client) => {
-      _db = client.db();
+      _db = client.db(dbName); // Especifica o nome do banco de dados
       callback(null, _db);
     })
     .catch((err) => {
